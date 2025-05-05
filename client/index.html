@@ -4,23 +4,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   <title>Ubuntu | The leading operating system for PCs, IoT devices, servers and the cloud</title>
+  <meta name="description" content="Ubuntu is the modern, open source operating system on Linux for the enterprise server, desktop, cloud, and IoT." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="icon" href="https://assets.ubuntu.com/v1/8114528b-picto-ubuntu-orange.png" />
   <!-- GitHub Pages SPA handling -->
   <script>
-    // Redirect to the homepage if coming from a 404
+    // Set the base URL for the application
+    const BASE_URL = '/ubuntu-mirror/';
+
+    // Handle redirects from 404.html
     (function() {
-      // If the URL doesn't contain a file extension and isn't the root path
-      if (location.pathname.split('/').pop().indexOf('.') === -1 &&
-              location.pathname !== '/ubuntu-mirror/' &&
+      const redirect = sessionStorage.redirect;
+      delete sessionStorage.redirect;
+
+      if (redirect && redirect !== location.pathname) {
+        // If we have a saved path from a 404 redirect
+        history.replaceState(null, null, redirect);
+      } else if (location.pathname !== BASE_URL &&
+              !location.pathname.startsWith(BASE_URL) &&
               location.pathname !== '/ubuntu-mirror') {
-        // Store the URL to redirect to after loading the index page
-        sessionStorage.redirect = location.pathname;
+        // If we're not at the correct base path, redirect
+        location.replace(BASE_URL);
       }
     })();
   </script>
+  <base href="/ubuntu-mirror/" />
 </head>
 <body>
 <div id="root"></div>

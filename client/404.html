@@ -8,17 +8,48 @@
         // Single Page App GitHub Pages 404 redirect
         // Based on https://github.com/rafgraph/spa-github-pages
         (function() {
-            const redirectPath = sessionStorage.redirect;
-            delete sessionStorage.redirect;
+            const pathSegmentsToKeep = 1; // Keep the first segment: "ubuntu-mirror"
+            const l = window.location;
 
-            if (redirectPath && redirectPath !== location.pathname) {
-                history.replaceState(null, null, redirectPath);
+            // Don't redirect if we're not in the ubuntu-mirror path
+            if (!l.pathname.includes('/ubuntu-mirror')) {
+                return;
             }
+
+            const cleanPath = l.pathname
+                .split('/')
+                .filter(p => p)  // Remove empty strings
+                .slice(0, pathSegmentsToKeep)
+                .join('/');
+
+            // Store the URL to redirect to after loading the index page
+            sessionStorage.redirect = l.pathname.split('/').slice(0, pathSegmentsToKeep + 1).join('/') === '/ubuntu-mirror'
+                ? l.pathname
+                : '/' + cleanPath + l.pathname.slice(l.pathname.indexOf(cleanPath) + cleanPath.length);
+
+            // Redirect to the ubuntu-mirror base path
+            window.location.replace(
+                l.protocol + '//' + l.hostname +
+                (l.port ? ':' + l.port : '') +
+                '/' + cleanPath + '/' +
+                l.search
+            );
         })();
     </script>
-    <meta http-equiv="refresh" content="0;URL='/ubuntu-mirror/'" />
 </head>
 <body>
-<p>Redirecting to the homepage...</p>
+<div class="not-found-container" style="font-family: Ubuntu, Arial, sans-serif; max-width: 800px; margin: 100px auto; text-align: center; color: #333;">
+    <img src="/ubuntu-mirror/ubuntu-logo.svg" alt="Ubuntu Logo" style="width: 128px; height: auto;" onerror="this.style.display='none'">
+    <h1 style="color: #E95420; font-weight: 300; font-size: 36px; margin-top: 30px;">Page Not Found</h1>
+    <p style="font-size: 18px; line-height: 1.5; margin: 20px 0;">The page you're looking for doesn't exist or has been moved.</p>
+    <p style="font-size: 16px;">Redirecting to the homepage...</p>
+    <a href="/ubuntu-mirror/" style="display: inline-block; background-color: #E95420; color: white; text-decoration: none; padding: 10px 20px; border-radius: 4px; margin-top: 20px; font-weight: 500;">Go to Homepage</a>
+</div>
+<script>
+    // Redirect after a short delay if the JavaScript redirect doesn't work
+    setTimeout(function() {
+        window.location.href = '/ubuntu-mirror/';
+    }, 5000);
+</script>
 </body>
 </html>
