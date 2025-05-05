@@ -45,7 +45,7 @@ jobs:
           # Add any environment variables needed for the build
           NODE_ENV: production
           # Set BASE_URL for GitHub Pages deployment
-          BASE_URL: '/ubuntu-mirror'
+          BASE_URL: '/ubuntu-mirror/'
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
