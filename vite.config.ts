@@ -14,6 +14,7 @@ export default defineConfig({
         ]
       : []),
   ],
+  base: '/ubuntu-mirror/',
   resolve: {
     alias: {
       "@db": path.resolve(import.meta.dirname, "db"),
