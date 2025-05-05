@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Not Found | Ubuntu Mirror</title>
+    <script>
+        // Single Page App GitHub Pages 404 redirect
+        // Based on https://github.com/rafgraph/spa-github-pages
+        (function() {
+            const redirectPath = sessionStorage.redirect;
+            delete sessionStorage.redirect;
+
+            if (redirectPath && redirectPath !== location.pathname) {
+                history.replaceState(null, null, redirectPath);
+            }
+        })();
+    </script>
+    <meta http-equiv="refresh" content="0;URL='/ubuntu-mirror/'" />
+</head>
+<body>
+<p>Redirecting to the homepage...</p>
+</body>
+</html>
